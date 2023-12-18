@@ -13,7 +13,7 @@ the following code,
 
 ```R
 if (!require(devtools)) install.packages("devtools")
-devtools::install_github("https://github.com/ytalau/eiv")
+devtools::install_github("https://github.com/ytalau/jlong")
 ```
 
 ```{r}
@@ -100,4 +100,4 @@ summary(res2)
 ```
 
 
-[github-url]: https://github.com/ytalau/eiv
+[github-url]: https://github.com/ytalau/jlong

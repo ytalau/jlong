@@ -7,8 +7,8 @@ Authors@R:
            family = "Lau",
            role = c("aut", "cre"),
            email = "ytalau.stat@gmail.com")
-Description: This is an internal package with functions 
-License: What license is it under?
+Description: This is an internal package for linking two linear mixed-effects models via a joint model method.
+License: GPL (>= 3)
 Roxygen: list(markdown = TRUE)
 Imports:nleqslv,
         stats,
