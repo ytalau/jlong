@@ -1,0 +1,19 @@
+Package: jlong
+Type: Package
+Title: Joint Longitudinal Models
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Abby",
+           family = "Lau",
+           role = c("aut", "cre"),
+           email = "ytalau.stat@gmail.com")
+Description: This is an internal package with functions 
+License: What license is it under?
+Roxygen: list(markdown = TRUE)
+Imports:nleqslv,
+        stats,
+        Matrix,
+        data.table
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.3

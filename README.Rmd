@@ -1,0 +1,103 @@
+---
+title: "jlong"
+output: github_document
+---
+
+The `R` package **jlong** provides a main function `jlong` to connect two 
+    linear mixed-effects models via a joint model method.
+    
+## Installation
+
+You can install the development version at [GitHub][github-url] using
+the following code,
+
+```R
+if (!require(devtools)) install.packages("devtools")
+devtools::install_github("https://github.com/ytalau/eiv")
+```
+
+```{r}
+library(jlong)
+```
+
+
+## Simulated Data
+
+### Submodel/Biomarker Data
+
+There are some baseline variables contained in the submodel data:
+
+- `biomk`: biomarker value
+- `id`: unique subject identifier
+- `time`: the visit time
+- `gender`: 0 corresponds to female and 1 corresponds to male.
+- `baseline_age`: age at time = 0
+
+
+
+```{r}
+head(example_dat$biomk)
+```
+
+There are additional baseline variables contained in the primary model data:
+
+- `score`: clinical outcome score
+- `id`: unique subject identifier which needs to match the `id` in the submodel
+- `time`: the visit time which could be different from the visit time in submodel
+- `gender`: 0 corresponds to female and 1 corresponds to male.
+- `baseline_age`: age at time = 0
+- `baseline_edu` number of years of education completed at time = 0
+- `gene`: a binary variable indicating the existence of certain genes
+
+```{r}
+head(example_dat$primary)
+```
+
+
+
+## True Model: Primary model has random slope and random intercept
+
+The `jlong` function is used to jointly fit two linear mixed models. 
+There are five argument needed for the `jlong` to function.
+
+- `data.primod`: a data frame / data.table for the primary model
+- `data.submod`: a data frame / data.table for the biomarker model
+- `formula.primod`: an object of class "formula" (or one that can be coerced to that class): a symbolic description of the primary model to be fitted; 
+    the syntax of the formula is similar to the functions in `lme4` package
+- `formula.submod`: an object of class "formula" (or one that can be coerced to that class): a symbolic description of the sub model to be fitted 
+    similar to the functions in `lme4` package
+- `var.shared`: a string specifying the variable name shared in both models
+
+```{r}
+res2 <- jlong(data.primod = example_dat$primary,
+                  data.submod = example_dat$biomk,
+                  formula.primod = score ~ gender + baseline_age + time +
+                      baseline_edu + traj + traj:time + gene + (time | id),
+                  formula.submod = biomk ~ gender + baseline_age + time +
+                      (time | id),
+                  var.shared = "traj")
+
+summary(res2)
+
+```
+
+
+### Simpler Model: Drop the random slope in the primary model
+
+Here we drop the random slope in the primary model, which means the `time` 
+variable in the primary data set is now a time-dependent variable.
+
+```{r}
+res2 <- jlong(data.primod = example_dat$primary,
+                  data.submod = example_dat$biomk,
+                  formula.primod = score ~ gender + baseline_age + time +
+                      baseline_edu + traj + gene + (1 | id),
+                  formula.submod = biomk ~ gender + baseline_age + time +
+                      (time | id),
+                  var.shared = "traj")
+
+summary(res2)
+```
+
+
+[github-url]: https://github.com/ytalau/eiv
