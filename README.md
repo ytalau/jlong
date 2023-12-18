@@ -6,12 +6,12 @@ two linear mixed-effects models via a joint model method.
 
 ## Installation
 
-You can install the development version at \[GitHub\]\[github-url\]
-using the following code,
+You can install the development version at
+[GitHub](https://github.com/ytalau/jlong) using the following code,
 
 ``` r
 if (!require(devtools)) install.packages("devtools")
-devtools::install_github("https://github.com/ytalau/eiv")
+devtools::install_github("https://github.com/ytalau/jlong")
 ```
 
 ``` r
