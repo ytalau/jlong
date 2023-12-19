@@ -1,14 +1,16 @@
 #' Fit Linear Mixed-Effects Model with Covariate from another Linear Mixed-Effects Model
 #'
-#' @param formula.primod A formula for the primary response variable
-#' @param formula.submod A formula for the sub model (biomarker data model)
+#' @description This function connects two linear mixed-effects models via a joint model.
+#'
+#' @param formula.primod A two-sided formula for the primary response variable
+#' @param formula.submod A two-sided formula for the sub model (biomarker data model)
 #' @param data.primod Primary response data
 #' @param data.submod Sub model data
 #' @param var.shared The name of the variable that both models share but remember
-#'              to put this name in the formlua for the response variable
+#'              to put this name in the formula for the response variable
 #' @param ...
 #'
-#' @return An object of class
+#' @return An object of class \code{jlong}
 #' @export jlong
 #'
 jlong <- function(formula.primod, formula.submod, data.primod, data.submod,

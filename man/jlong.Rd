@@ -14,22 +14,22 @@ jlong(
 )
 }
 \arguments{
-\item{formula.primod}{A formula for the primary response variable}
+\item{formula.primod}{A two-sided formula for the primary response variable}
 
-\item{formula.submod}{A formula for the sub model (biomarker data model)}
+\item{formula.submod}{A two-sided formula for the sub model (biomarker data model)}
 
 \item{data.primod}{Primary response data}
 
 \item{data.submod}{Sub model data}
 
 \item{var.shared}{The name of the variable that both models share but remember
-to put this name in the formlua for the response variable}
+to put this name in the formula for the response variable}
 
 \item{...}{}
 }
 \value{
-An object of class
+An object of class \code{jlong}
 }
 \description{
-Fit Linear Mixed-Effects Model with Covariate from another Linear Mixed-Effects Model
+This function connects two linear mixed-effects models via a joint model.
 }

@@ -5,30 +5,39 @@
 #' @details The first object is the \code{biomk} data which mimics
 #' the scaled cerebrospinal fluid biomarker level distribution,
 #' containing the baseline age, gender, biomarker levels, and visit times
-#' for 100 subjects.
+#' for 100 participants.
 #' The second list object is the \code{primary} data which mimics
 #' the distribution of the cognitive scores,
 #' containing the baseline age, baseline education, gender, cognitive scores,
 #' time for each available score, and a categorical variable indicating if an
-#' individual has more than a copy of a certain gene for the 100 subjects.
+#' individual has more than a copy of a certain gene for the same 100
+#' participants.
 #'
 #'
-#' @format This data frame contains the following columns:
+#' @format The data frames contain the following columns:
 #'
 #' \describe{
-#' \item{id}{identifer of child}
-#' \item{time}{an indicator of age intervals (1 = age 2--7 for childhood
-#'  BMI z-scores and age 12--17 for obesity in adolescence,
-#'  2 = age 7--12 for preadolescence
-#'  BMI z-scores and age 20--29 for obesity in adulthood)}
-#' \item{gender}{an indicator of gender (1 = male, 0 = female)}
-#' \item{age}{child's age}
-#' \item{bmi_z}{BMI z-score}
-#' \item{obes}{an indicator of obesity (1 = obese, 0 = none)}
+#' \item{biomk: id}{participant identifer}
+#' \item{biomk: time}{date of the biomarker measurement}
+#' \item{biomk: gender}{an indicator of gender (1 = male, 0 = female)}
+#' \item{biomk: baseline_age}{baseline age}
+#' \item{biomk: biomk}{biomarker level}
+#'
+#' \item{primary: id}{participant identifer}
+#' \item{primary: time}{date of cognitive test}
+#' \item{primary: gender}{an indicator of gender (1 = male, 0 = female)}
+#' \item{primary: baseline_age}{baseline age}
+#' \item{primary: gene}{an indicator of gene copy number (1 = at least one copy,
+#'  0 = 0 copy)}
+#' \item{primary: baseline_edu}{number of educational years completed at baseline}
+#' \item{primary: score}{cognitive score}
 #' }
 #'
 #' @keywords datasets
 #' @examples
-#' data(example_dat)
+#' \dontrun{
+#' head(example_dat$biomk)
+#' head(example_dat$primary)
+#' }
 #'
 "example_dat"
