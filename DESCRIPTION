@@ -9,6 +9,7 @@ Authors@R:
            email = "ytalau.stat@gmail.com")
 Description: This is an internal package for linking two linear mixed-effects models via a joint model method.
 License: GPL (>= 3)
+Depends: R (>= 3.5.0)
 Roxygen: list(markdown = TRUE)
 Imports:nleqslv,
         stats,

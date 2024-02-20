@@ -71,8 +71,9 @@ There are five argument needed for the `jlong` to function.
 ```{r}
 res2 <- jlong(data.primod = example_dat$primary,
                   data.submod = example_dat$biomk,
-                  formula.primod = score ~ gender + baseline_age + time +
-                      baseline_edu + traj + traj:time + gene + (time | id),
+                  formula.primod = score ~ gender + baseline_age + 
+                      baseline_edu + gene + time  + gene:time  + traj +  
+                  traj:time  + (time | id),
                   formula.submod = biomk ~ gender + baseline_age + time +
                       (time | id),
                   var.shared = "traj")

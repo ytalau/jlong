@@ -63,13 +63,13 @@ dS_beta_uxt <- function(matUX, Sigma_b_inv, beta_xt, merr.sub.mat,
     out <- t(matUX) %*% Sigma_b_inv %*% (-matUX)
     idx <- ncol(matUX) - (length(beta_xt)-1):0
     coef_mats <- kronecker(merr.sub.mat, Sigma_b_inv)
-    ## TODO: this calculation needs to be verified
+
     mat_idx <- which(mmX != 0, arr.ind = T)
     nE <- nrow(mat_idx)
     varfun <- function(i, j, k, l) Sigma_b_inv[i, k] * merr.sub.mat[l, j]
     d_corr_term_vec <- mapply(varfun,
                               i = rep(mat_idx[, 1], each = nE),
-                              j = rep(mat_idx[, 2], each = nE),
+                              j = rep(mat_idx[, 2], times = nE),
                               k = mat_idx[, 1], l = mat_idx[, 2])
     d_corr_term <- matrix(d_corr_term_vec, nrow = nE, ncol = nE, byrow = T)
     out[idx, idx] <- out[idx, idx] + d_corr_term
@@ -527,7 +527,6 @@ estMod2 <- function(data.sub, data.pri, ...) {
     beta_1r <- as.matrix(par[1:idx_beta_1r])
     beta_u <- as.matrix(par[(idx_beta_v + 1):idx_beta_u])
     beta_xt <- as.matrix(par[(idx_beta_u + 1):idx_beta_xt])
-    # print(par[11:13])
     #
     ## the structure of Xhat should be given at the first place
     if (is.null(data.sub$tdep[[1]])) {

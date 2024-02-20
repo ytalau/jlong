@@ -63,7 +63,6 @@ data.process2 <- function(formula, data, var.shared = NULL) {
         sdat <- base::split(data,
                             f = as.formula(paste("~", as.character(parts$id.var))))
     }
-    #sdat <- base::split(data, f = as.formula(paste("~", as.character(parts$id.var))))
 
     n <- length(sdat)
     random.vars <- as.character(all.vars(parts$random))
@@ -98,16 +97,20 @@ data.process2 <- function(formula, data, var.shared = NULL) {
             name_idx <- names(idx)[which(idx == 1)]
             selectidx <- c(attr(terms(fixed.fm), "intercept") == 1, !idx)
             selectidx_names <- names(selectidx)[selectidx == F]
-            slp.vars <- setdiff(dimnames(fmatrix)[[1]][
-                fmatrix[, setdiff(name_idx, random.vars)] == 1],
-                random.vars)
-            if(identical(slp.vars, character(0))) {
+            tmpidx <- apply(as.matrix(fmatrix[, setdiff(name_idx, random.vars)]) == 1,
+                            1, any)
+            colidx <- which(tmpidx)
+            colidx2 <- which(colnames(mdat[[1]]) %in% random.vars)
+            slp.idx <- setdiff(colidx, colidx2)
+            slp.vars <- setdiff(names(colidx), random.vars)
+            if(identical(slp.idx, integer(0))) {
                 mdat.slps <- lapply(1:length(mdat), function(i)
                     matrix(1, dimnames = list(NULL, c(random.vars))))
             } else {
+                mdat.names <- var.names[which(idx == 1) + 1L]
                 mdat.slps <- lapply(1:length(mdat), function(i)
-                    matrix(cbind(1, unique(mdat[[i]][, slp.vars])),
-                           nrow = 1, dimnames = list(NULL, name_idx)))
+                    matrix(cbind(1, unique(mdat[[i]][, slp.idx])),
+                           nrow = 1, dimnames = list(NULL, mdat.names)))
             }
 
             mdat <- lapply(1:n, function(i) mdat[[i]][, selectidx])
@@ -119,8 +122,7 @@ data.process2 <- function(formula, data, var.shared = NULL) {
     tdep <- lapply(1:n, function(i) design[[i]][["tdep"]])
     idx_shared <- which(fmatrix[rownames(fmatrix) == var.shared, ] == 1)
     add.var.shared <- var.names[assign_id %in% idx_shared]
-    # add.var.shared <- setdiff(setdiff(colnames(fmatrix)[idx_shared],
-    #                           random.vars), selectidx_names)
+
     sf_names <- setdiff(colnames(design[[1]][["tind"]]), add.var.shared)
     int_names <- intersect(colnames(design[[1]][["tind"]]), add.var.shared)
 
@@ -142,8 +144,8 @@ data.process2 <- function(formula, data, var.shared = NULL) {
                 sf_idx <- TRUE
                 int_idx <- FALSE
             } else {
-                sf_idx <- c(TRUE, !var.shared %in% slp.vars)
-                int_idx <- c(FALSE, var.shared %in% slp.vars)
+                sf_idx <- c(TRUE, !slp.vars %in% var.shared)
+                int_idx <- c(FALSE, slp.vars %in% var.shared)
             }
 
             mdat.slps_shared <- lapply(1:n, function(i)

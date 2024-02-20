@@ -46,6 +46,7 @@ jlong <- function(formula.primod, formula.submod, data.primod, data.submod,
                                    c("(Intercept)", dat.sub$random.vars))
     dimnames(Sigma_b) <- list(c("(Intercept)", dat.pri$random.vars),
                                   c("(Intercept)", dat.pri$random.vars))
+
     fit <- list(call = call,
                 inf.submod = mod$ses[1:m],
                 inf.primod = mod$se[(m + 1) : length(mod$ses)],
