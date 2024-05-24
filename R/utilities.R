@@ -1,6 +1,5 @@
 #' @importFrom stats as.formula model.matrix model.response model.extract
 #' model.frame terms pchisq printCoefmat rnorm glm coef
-#' @export
 extract.formula <- function(f.obj) {
 
     stopifnot(inherits(f.obj, "formula"))
@@ -37,7 +36,7 @@ split.fixed <- function(model.data) {
     list(tind = tind, tdep = tdep)
 }
 
-#' @export
+
 getClsz <- function(formula, data) {
 
     fm <- as.formula(formula)
@@ -51,7 +50,7 @@ getClsz <- function(formula, data) {
 #' @importFrom stats as.formula model.matrix model.response model.extract
 #' model.frame terms pchisq printCoefmat rnorm glm coef
 #' @importFrom data.table is.data.table
-#' @export
+
 data.process2 <- function(formula, data, var.shared = NULL) {
 
     fm <- as.formula(formula)
@@ -113,7 +112,7 @@ data.process2 <- function(formula, data, var.shared = NULL) {
                            nrow = 1, dimnames = list(NULL, mdat.names)))
             }
 
-            mdat <- lapply(1:n, function(i) mdat[[i]][, selectidx])
+            mdat <- lapply(1:n, function(i) mdat[[i]][, selectidx, drop = F])
         }
     }
 

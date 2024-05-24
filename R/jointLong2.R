@@ -1,5 +1,4 @@
 
-#' @export
 jointLong2 <- function(formula.submod, data.submod,
                       formula.primod, data.primod, var.shared, ...) {
 
